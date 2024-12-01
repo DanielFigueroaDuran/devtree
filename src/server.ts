@@ -1,11 +1,15 @@
 import express from "express";
+import router from "./routers/router";
 
 const app = express();
 
-// Routing
+//Read Form Data
+app.use(express.json());
 
-app.get('/', (req, res) => {
-      res.send('Hola Mundo en Express');
-})
+app.use('/', router)
+
+// app.get('/', (req, res) => {
+//       res.send('Hola Mundo en Express');
+//})
 
 export default app;
