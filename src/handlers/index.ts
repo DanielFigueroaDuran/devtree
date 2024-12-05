@@ -1,8 +1,9 @@
 import User from "../models/User";
 import { Request, Response } from 'express';
+import { hashPassword } from "../utils/auth";
 
 export const createAccount = async (req: Request, res: Response) => {
-      const { email } = req.body;
+      const { email, password } = req.body;
       //console.log(email);
       const userExists = await User.findOne({ email });
       // console.log(userExists);
@@ -14,8 +15,8 @@ export const createAccount = async (req: Request, res: Response) => {
       }
 
       const user = new User(req.body);
+      user.password = await hashPassword(password);
       await user.save();
-
       res.status(201).send('Usuario Creado Correctamente');
       return;
-}
+};
