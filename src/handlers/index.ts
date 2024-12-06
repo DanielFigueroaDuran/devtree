@@ -13,7 +13,6 @@ export const createAccount = async (req: Request, res: Response) => {
             res.status(400).json({ errors: errors.array() });
             return;
       };
-      return;
 
       const { email, password } = req.body;
       const userExists = await User.findOne({ email });
