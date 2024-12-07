@@ -36,13 +36,6 @@ export const createAccount = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-      // handle errors
-      // let errors = validationResult(req);
-      // //console.log(errors);
-      // if (!errors.isEmpty()) {
-      //       res.status(400).json({ errors: errors.array() });
-      //       return;
-      // };
 
       const { email, password } = req.body;
 
