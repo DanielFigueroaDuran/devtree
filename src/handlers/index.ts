@@ -49,4 +49,20 @@ export const login = async (req: Request, res: Response) => {
             res.status(400).json({ errors: errors.array() });
             return;
       };
+
+      const { email, password } = req.body;
+
+      //check if the user is registered
+      const user = await User.findOne({ email });
+      // console.log(userExists);
+
+      if (!user) {
+            const error = new Error('El Usuario no existe');
+            res.status(404).json({ error: error.message });
+            return;
+      };
+
+      //check password
+
+      console.log('Si Existe...');
 };
