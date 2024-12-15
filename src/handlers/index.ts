@@ -1,10 +1,12 @@
 import type { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import User from "../models/User";
+// import User from "../models/User";
 import { checkPassword, hashPassword } from "../utils/auth";
 import { generateJWT } from '../utils/jwt';
 import { contextsKey } from 'express-validator/lib/base';
 import jwt from 'jsonwebtoken';
+import User from '../models/User';
+
 
 export const createAccount = async (req: Request, res: Response) => {
       const { default: slug } = await import("slug");
@@ -67,5 +69,6 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const getUser = async (req: Request, res: Response) => {
-
+      console.log('desde GetUser');
+      res.json(req.user);
 };
