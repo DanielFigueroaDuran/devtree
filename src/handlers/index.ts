@@ -11,8 +11,6 @@ import User from '../models/User';
 export const createAccount = async (req: Request, res: Response) => {
       const { default: slug } = await import("slug");
 
-
-
       const { email, password } = req.body;
       const userExists = await User.findOne({ email });
       // console.log(userExists);
@@ -69,6 +67,14 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const getUser = async (req: Request, res: Response) => {
-      console.log('desde GetUser');
       res.json(req.user);
+};
+
+export const updateProfile = async (req: Request, res: Response) => {
+      try {
+            console.log(req.body);
+      } catch (e) {
+            const error = new Error('Hubo un error');
+            res.status(500).json({ error: error.message });
+      }
 };
