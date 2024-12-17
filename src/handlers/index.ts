@@ -1,11 +1,13 @@
 import type { Request, Response } from 'express';
-import { validationResult } from 'express-validator';
+//import { validationResult } from 'express-validator';
+import { formidable } from "formidable";
 import { checkPassword, hashPassword } from "../utils/auth";
 import { generateJWT } from '../utils/jwt';
 import { contextsKey } from 'express-validator/lib/base';
-import jwt from 'jsonwebtoken';
+//import jwt from 'jsonwebtoken';
 import User from '../models/User';
-import slug from 'slug';
+import cloudinary from "../config/cloudinary";
+//import slug from 'slug';
 
 
 export const createAccount = async (req: Request, res: Response) => {
@@ -90,9 +92,26 @@ export const updateProfile = async (req: Request, res: Response) => {
             req.user.handle = handle;
             await req.user.save();
             res.send('Perfil Actualizado Correctammente');
+            return;
 
       } catch (e) {
             const error = new Error('Hubo un error');
             res.status(500).json({ error: error.message });
+            return;
       }
 };
+
+export const uploadImage = async (req: Request, res: Response) => {
+      const form = formidable({ multiples: false });
+      form.parse(req, (err, fields, files) => {
+            console.log(files.file[0].filepath);
+      })
+
+      try {
+
+      } catch (e) {
+            const error = new Error('Hubo un error');
+            res.status(500).json({ error: error.message });
+            return
+      }
+}
