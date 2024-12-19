@@ -103,7 +103,7 @@ export const updateProfile = async (req: Request, res: Response) => {
 
 export const uploadImage = async (req: Request, res: Response) => {
       const form = formidable({ multiples: false });
-      form.parse(req, (err, fields, files) => {
+      form.parse(req, (error, fields, files) => {
             console.log(files.file[0].filepath);
       })
 
