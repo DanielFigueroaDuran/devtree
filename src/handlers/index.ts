@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 //import { validationResult } from 'express-validator';
 import { formidable } from "formidable";
+import { v4 as uuid } from "uuid";
 import { checkPassword, hashPassword } from "../utils/auth";
 import { generateJWT } from '../utils/jwt';
 import { contextsKey } from 'express-validator/lib/base';
@@ -103,12 +104,23 @@ export const updateProfile = async (req: Request, res: Response) => {
 
 export const uploadImage = async (req: Request, res: Response) => {
       const form = formidable({ multiples: false });
-      form.parse(req, (error, fields, files) => {
-            console.log(files.file[0].filepath);
-      })
 
       try {
+            form.parse(req, (error, fields, files) => {
+                  // console.log(files.file[0].filepath);
+                  cloudinary.uploader.upload(files.file[0].filepath, { public_id: uuid() }, async function (error, result) {
+                        if (error) {
+                              const error = new Error('Hubo un error al subir la imagen');
+                              res.status(500).json({ error: error.message });
+                              return;
+                        };
 
+                        if (result) {
+                              console.log(result.secure_url);
+                        };
+
+                  });
+            })
       } catch (e) {
             const error = new Error('Hubo un error');
             res.status(500).json({ error: error.message });
