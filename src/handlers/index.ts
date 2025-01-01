@@ -77,7 +77,7 @@ export const updateProfile = async (req: Request, res: Response) => {
       const { default: slug } = await import("slug");
 
       try {
-            const { description } = req.body;
+            const { description, links } = req.body;
 
             const handle = slug(req.body.handle, '');
             const handleExists = await User.findOne({ handle });
@@ -91,6 +91,7 @@ export const updateProfile = async (req: Request, res: Response) => {
             // Update Users
             req.user.description = description;
             req.user.handle = handle;
+            req.user.links = links;
             await req.user.save();
             res.send('Perfil Actualizado Correctammente');
             return;
@@ -104,7 +105,6 @@ export const updateProfile = async (req: Request, res: Response) => {
 
 export const uploadImage = async (req: Request, res: Response) => {
       const form = formidable({ multiples: false });
-
       try {
             form.parse(req, (error, fields, files) => {
                   // console.log(files.file[0].filepath);
